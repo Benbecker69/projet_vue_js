@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Builds
+dist/
+build/
+.output/
+.nuxt/
+.nitro/
+.cache/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+coverage/
+
+# Misc
+*.tsbuildinfo
+
+# Project-specific
+.claude/
+CLAUDE.md
+PLAN.md
+*.pdf
+logs_backend.txt
+logs_frontend.txt
