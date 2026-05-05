@@ -4,6 +4,7 @@ useSeoMeta({ title: 'Mes liens — Smart Identity' });
 
 const profileStore = useProfileStore();
 await profileStore.fetchProfile();
+const toast = useToast();
 
 const links = computed(() => profileStore.profile?.profile?.links ?? []);
 
@@ -55,19 +56,27 @@ async function save() {
         body: form,
       });
       if (profileStore.profile) profileStore.profile.profile.links = data.links;
+      toast.success('Lien modifié');
     } else {
       await profileStore.addLink({ ...form });
+      toast.success('Lien ajouté');
     }
     showForm.value = false;
   } catch (e: any) {
     error.value = e?.data?.error?.message || 'Erreur lors de la sauvegarde';
+    toast.error(error.value);
   } finally {
     saving.value = false;
   }
 }
 
 async function remove(id: string) {
-  await profileStore.deleteLink(id);
+  try {
+    await profileStore.deleteLink(id);
+    toast.success('Lien supprimé');
+  } catch {
+    toast.error('Impossible de supprimer ce lien');
+  }
 }
 </script>
 

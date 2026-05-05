@@ -4,6 +4,7 @@ useSeoMeta({ title: 'Mes bracelets — Smart Identity' });
 
 const profileStore = useProfileStore();
 const config = useRuntimeConfig();
+const toast = useToast();
 await profileStore.fetchProfile();
 
 const newLabel = ref('');
@@ -16,7 +17,10 @@ async function create() {
   creating.value = true;
   try {
     await profileStore.createNfc(newLabel.value);
+    toast.success('Bracelet créé avec succès');
     newLabel.value = '';
+  } catch {
+    toast.error('Impossible de créer le bracelet');
   } finally {
     creating.value = false;
   }
@@ -32,13 +36,20 @@ async function simulateScan(nfc: any) {
     if (data.slug) {
       window.open(`/u/${data.slug}`, '_blank');
     }
+  } catch {
+    toast.error('Erreur lors de la simulation du scan');
   } finally {
     scanning.value = null;
   }
 }
 
 async function remove(id: string) {
-  await profileStore.deleteNfc(id);
+  try {
+    await profileStore.deleteNfc(id);
+    toast.success('Bracelet supprimé');
+  } catch {
+    toast.error('Impossible de supprimer ce bracelet');
+  }
 }
 </script>
 
