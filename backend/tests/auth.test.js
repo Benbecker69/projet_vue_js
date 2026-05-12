@@ -65,6 +65,15 @@ describe('Auth', () => {
     expect(res.status).toBe(401);
   });
 
+  it('POST /api/auth/login — refuse un utilisateur inexistant', async () => {
+    const res = await request(app).post('/api/auth/login').send({
+      email: 'nobody@example.com',
+      password: 'password123',
+    });
+    expect(res.status).toBe(401);
+    expect(res.body.error.code).toBe('INVALID_CREDENTIALS');
+  });
+
   it('GET /api/auth/me — 401 sans token', async () => {
     const res = await request(app).get('/api/auth/me');
     expect(res.status).toBe(401);
