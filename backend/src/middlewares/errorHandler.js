@@ -11,7 +11,7 @@ function errorHandler(err, req, res, next) {
       error: {
         message: 'Données invalides',
         code: 'VALIDATION_ERROR',
-        details: err.errors.map(e => ({ field: e.path.join('.'), message: e.message })),
+        details: err.issues.map(e => ({ field: e.path.join('.'), message: e.message })),
       },
     });
   }
